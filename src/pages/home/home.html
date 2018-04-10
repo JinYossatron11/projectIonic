@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>SevenShake</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <form [formGroup]="myGroup">
+
+    <ion-list inset>
+
+      <ion-item>
+        <ion-label>name</ion-label>
+        <ion-input type="text" formControlName="name"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>price</ion-label>
+        <ion-input type="text" formControlName="price"></ion-input>
+      </ion-item>
+    </ion-list>
+    
+
+    <div>
+      <button ion-button (click)="addItem();">
+        <ion-icon name="person"></ion-icon>Save</button>
+      <button ion-button (click)="clear();">Clear</button>
+      <button ion-button (click)="getItemlist();">Show list</button>
+    </div>
+    <ion-list *ngIf="isCheckListItem">
+      <ion-item  *ngFor="let y of nameItem[0]">
+        <ion-thumbnail item-start>
+          <img src="https://th-th.facebook.com/SnackJackClub/">
+        </ion-thumbnail>
+        <h2>{{ y.name }}</h2>
+        <h2>{{ y.price }}</h2>
+      </ion-item>
+    </ion-list>
+  </form>
+
+</ion-content>
