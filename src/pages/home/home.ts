@@ -10,6 +10,7 @@ export class HomePage {
   myGroup : FormGroup;
   nameItem: Object[];
   isCheckListItem:boolean;
+  isCheckDeleteUpdate:boolean;
   constructor(public navCtrl: NavController,private httpClient:HttpClient) {
     this.myGroup = new FormGroup({
       name: new FormControl(),
@@ -54,6 +55,18 @@ export class HomePage {
 
         this.nameItem = [data];
         console.log(this.nameItem);
+      }, err => {
+        console.log(err);
+      });
+    });
+  }
+
+  deleteItem(id:string){
+    return new Promise(resolve => {
+      const url = 'http://localhost:1323/sevens/'
+      this.httpClient.delete(url+id).subscribe(data => {
+        this.isCheckListItem = false;
+        console.log(data);
       }, err => {
         console.log(err);
       });
