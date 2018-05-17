@@ -12,6 +12,7 @@
         <ion-label>name</ion-label>
         <ion-input type="text" formControlName="name"></ion-input>
       </ion-item>
+      <p id="nameError" class="invalid-feedback" *ngIf="myGroup.controls.name.touched && myGroup.controls.name.invalid"></p>
       <ion-item>
         <ion-label>price</ion-label>
         <ion-input type="text" formControlName="price"></ion-input>
