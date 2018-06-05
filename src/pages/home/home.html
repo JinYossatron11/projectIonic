@@ -12,28 +12,32 @@
         <ion-label>name</ion-label>
         <ion-input type="text" formControlName="name"></ion-input>
       </ion-item>
-      <p id="nameError" class="invalid-feedback" *ngIf="myGroup.controls.name.touched && myGroup.controls.name.invalid"></p>
+      <p id="nameError" class="invalid-feedback" *ngIf="myGroup.get('name').touched && myGroup.get('name').invalid"></p>
       <ion-item>
         <ion-label>price</ion-label>
         <ion-input type="text" formControlName="price"></ion-input>
       </ion-item>
     </ion-list>
-    
+
 
     <div>
       <button ion-button (click)="addItem();">
         <ion-icon name="person"></ion-icon>Save</button>
       <button ion-button (click)="clear();">Clear</button>
       <button ion-button (click)="getItemlist();">Show list</button>
+      <div class="col-1 mt-6 text-center">
+        <a>Sum : {{ sum }}</a>
+      </div>
     </div>
     <ion-list *ngIf="isCheckListItem ">
-      <ion-item  *ngFor="let y of nameItem[0]">
+      <ion-item *ngFor="let y of ItemList ; let i=index ">
         <ion-thumbnail item-start>
           <ion-icon name="people"></ion-icon>
         </ion-thumbnail>
         <h2>{{ y.name }}</h2>
         <h2>{{ y.price }}</h2>
-        <button ion-button (click)="deleteItem(y.id);">Delelte</button>
+        <h2>{{ y.submitDate }}</h2>
+        <button ion-button (click)="deleteItem(i);">Delelte</button>
       </ion-item>
     </ion-list>
   </form>

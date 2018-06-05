@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, DateTime } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -9,24 +9,33 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class HomePage {
   myGroup: FormGroup;
   nameItem: Object[];
+  ItemList = [];
   isCheckListItem: boolean;
   isCheckDeleteUpdate: boolean;
-  constructor(public navCtrl: NavController, private httpClient: HttpClient) {
-    this.myGroup = new FormGroup({
-      name: new FormControl(null, Validators.required),
-      price: new FormControl(null, Validators.required)
+  sum: number;
+
+  constructor(public navCtrl: NavController, private httpClient: HttpClient, private fb: FormBuilder) {
+    this.myGroup = this.fb.group({
+      name: ['', [Validators.required]],
+      price: ['', [Validators.required]]
     });
   }
 
   addItem() {
-    if (this.myGroup.valid) {
+    console.log(this.myGroup.valid);
+    if (!this.myGroup.valid) {
+
+    } else {
+
       return new Promise(resolve => {
         const url = 'http://localhost:1323/sevens'
         let body = new FormData();
         body.append('name', this.myGroup.get('name').value);
         body.append('price', this.myGroup.get('price').value);
+        body.append('submitDate', String(new Date()))
         this.httpClient.post(url, body).subscribe(data => {
           console.log(data);
+          this.ItemList.push(data);
         }, err => {
           console.log(err);
         });
@@ -49,24 +58,21 @@ export class HomePage {
       const url = 'http://localhost:1323/sevens'
       this.httpClient.get(url).subscribe(data => {
         this.isCheckListItem = true;
-
         this.nameItem = [data];
-        console.log(this.nameItem);
+        console.log(this.ItemList);
+        this.sum = 0;
+        for (let i = 0; i < this.ItemList.length; i++) {
+          this.sum += Number(this.ItemList[i].price);
+
+        }
+        console.log(this.sum);
       }, err => {
         console.log(err);
       });
     });
   }
 
-  deleteItem(id: string) {
-    return new Promise(resolve => {
-      const url = 'http://localhost:1323/sevens/'
-      this.httpClient.delete(url + id).subscribe(data => {
-        this.isCheckListItem = false;
-        console.log(data);
-      }, err => {
-        console.log(err);
-      });
-    });
+  deleteItem(index: number) {
+    this.ItemList.splice(index, 1)
   }
 }
