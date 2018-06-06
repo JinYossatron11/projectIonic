@@ -8,11 +8,13 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NavigationDetailsPage } from '../pages/navigation-details/navigation-details';
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    NavigationDetailsPage
   ],
   imports: [
     BrowserModule,
@@ -25,7 +27,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    NavigationDetailsPage
   ],
   providers: [
     StatusBar,

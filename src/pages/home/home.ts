@@ -1,7 +1,12 @@
 import { Component } from '@angular/core';
-import { NavController, DateTime } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { NavigationDetailsPage } from '../navigation-details/navigation-details';
+
+
+
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -36,6 +41,7 @@ export class HomePage {
         this.httpClient.post(url, body).subscribe(data => {
           console.log(data);
           this.ItemList.push(data);
+          this.sumNumber;
         }, err => {
           console.log(err);
         });
@@ -75,4 +81,14 @@ export class HomePage {
   deleteItem(index: number) {
     this.ItemList.splice(index, 1)
   }
+
+  get sumNumber(): number {
+    return this.sum
+  }
+  openNavDetailsPage(item) {
+    this.navCtrl.push(NavigationDetailsPage, { item: item });
+  }
+
+
 }
+

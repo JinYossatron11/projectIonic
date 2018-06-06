@@ -26,7 +26,7 @@
       <button ion-button (click)="clear();">Clear</button>
       <button ion-button (click)="getItemlist();">Show list</button>
       <div class="col-1 mt-6 text-center">
-        <a>Sum : {{ sum }}</a>
+        <a>Sum : {{ sumNumber }}</a>
       </div>
     </div>
     <ion-list *ngIf="isCheckListItem ">
@@ -38,6 +38,8 @@
         <h2>{{ y.price }}</h2>
         <h2>{{ y.submitDate }}</h2>
         <button ion-button (click)="deleteItem(i);">Delelte</button>
+        <button ion-button (click)="openNavDetailsPage(y);">Detail</button>
+
       </ion-item>
     </ion-list>
   </form>
