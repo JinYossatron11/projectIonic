@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, MenuController } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { NavigationDetailsPage } from '../navigation-details/navigation-details';
@@ -19,11 +19,13 @@ export class HomePage {
   isCheckDeleteUpdate: boolean;
   sum: number;
 
-  constructor(public navCtrl: NavController, private httpClient: HttpClient, private fb: FormBuilder) {
+  constructor(public navCtrl: NavController, private httpClient: HttpClient, private fb: FormBuilder, menu: MenuController) {
     this.myGroup = this.fb.group({
       name: ['', [Validators.required]],
       price: ['', [Validators.required]]
     });
+    menu.enable(true);
+
   }
 
   addItem() {
@@ -62,10 +64,11 @@ export class HomePage {
   getItemlist() {
     return new Promise(resolve => {
       const url = 'http://localhost:1323/sevens'
-      this.httpClient.get(url).subscribe(data => {
+      this.httpClient.get(url).subscribe((data: Array<any>) => {
         this.isCheckListItem = true;
-        this.nameItem = [data];
-        console.log(this.ItemList);
+        this.ItemList = data;
+        console.log(data[0]);
+
         this.sum = 0;
         for (let i = 0; i < this.ItemList.length; i++) {
           this.sum += Number(this.ItemList[i].price);
@@ -78,8 +81,18 @@ export class HomePage {
     });
   }
 
-  deleteItem(index: number) {
-    this.ItemList.splice(index, 1)
+  deleteItem(id: string, index: number) {
+    console.log(id);
+
+    return new Promise(resolve => {
+      const url = 'http://localhost:1323/sevens/' + id
+      this.httpClient.delete(url).subscribe(data => {
+        console.log(data);
+        this.ItemList.splice(index, 1)
+      }, err => {
+        console.log(err);
+      });
+    });
   }
 
   get sumNumber(): number {

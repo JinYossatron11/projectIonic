@@ -9,11 +9,13 @@ import { HomePage } from '../pages/home/home';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NavigationDetailsPage } from '../pages/navigation-details/navigation-details';
+import { LoginPage } from '../pages/login/login';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
+    LoginPage,
     NavigationDetailsPage
   ],
   imports: [
@@ -28,7 +30,8 @@ import { NavigationDetailsPage } from '../pages/navigation-details/navigation-de
   entryComponents: [
     MyApp,
     HomePage,
-    NavigationDetailsPage
+    NavigationDetailsPage,
+    LoginPage
   ],
   providers: [
     StatusBar,

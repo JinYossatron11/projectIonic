@@ -1,6 +1,11 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>SevenShake</ion-title>
+    <button ion-button menuToggle icon-only>
+      <ion-icon name='menu'></ion-icon>
+    </button>
+    <ion-title>
+      Menus
+    </ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content padding>
@@ -36,8 +41,7 @@
         </ion-thumbnail>
         <h2>{{ y.name }}</h2>
         <h2>{{ y.price }}</h2>
-        <h2>{{ y.submitDate }}</h2>
-        <button ion-button (click)="deleteItem(i);">Delelte</button>
+        <button ion-button (click)="deleteItem(y.id,i);">Delelte</button>
         <button ion-button (click)="openNavDetailsPage(y);">Detail</button>
 
       </ion-item>
