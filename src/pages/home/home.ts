@@ -39,7 +39,6 @@ export class HomePage {
         let body = new FormData();
         body.append('name', this.myGroup.get('name').value);
         body.append('price', this.myGroup.get('price').value);
-        body.append('submitDate', String(new Date()))
         this.httpClient.post(url, body).subscribe(data => {
           console.log(data);
           this.ItemList.push(data);
