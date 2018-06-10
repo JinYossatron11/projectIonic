@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
@@ -20,12 +20,32 @@ import { NavigationDetailsPage } from '../navigation-details/navigation-details'
   templateUrl: 'login.html',
 })
 export class LoginPage {
+
+  item = [
+    {
+      title: "Welcome to the Docs!",
+      description: "The <b>Ionic Component Documentation</b> showcases a number of useful components that are included out of the box with Ionic.",
+      image: "../../assets/imgs/ica-slidebox-img-1.png",
+    },
+    {
+      title: "What is Ionic?",
+      description: "<b>Ionic Framework</b> is an open source SDK that enables developers to build high quality mobile apps with web technologies like HTML, CSS, and JavaScript.",
+      image: "../../assets/imgs/ica-slidebox-img-2.png",
+    },
+    {
+      title: "What is Ionic Cloud?",
+      description: "The <b>Ionic Cloud</b> is a cloud platform for managing and scaling Ionic apps with integrated services like push notifications, native builds, user auth, and live updating.",
+      image: "../../assets/imgs/ica-slidebox-img-3.png",
+    }
+  ];
+
   loginForm: FormGroup
-  constructor(public navCtrl: NavController, public navParams: NavParams, private httpClient: HttpClient, private fb: FormBuilder) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private httpClient: HttpClient, private fb: FormBuilder, private alertCtrl: AlertController) {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required]],
       password: ['', [Validators.required]]
-    });  }
+    });
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
@@ -33,8 +53,8 @@ export class LoginPage {
 
 
 
-  openNavDetailsPage() {
-    this.navCtrl.push(HomePage);
+  openNavDetailsPage(item) {
+    this.navCtrl.push(HomePage, { item: item });
   }
 
   getItemlist() {
@@ -43,14 +63,21 @@ export class LoginPage {
       let body = new FormData();
       body.append('username', this.loginForm.get('username').value);
       body.append('password', this.loginForm.get('password').value);
-      this.httpClient.post(url,body).subscribe(data => {
+      this.httpClient.post(url, body).subscribe(data => {
         console.log(data);
-        this.openNavDetailsPage();
+        this.openNavDetailsPage(data);
       }, err => {
-        console.log(err.error['message']);
+        this.presentAlert(err.error['message'])
       });
     });
   }
 
-
+  presentAlert(error: string) {
+    let alert = this.alertCtrl.create({
+      title: 'เข้าสู่ระบบไม่สำเร็จ',
+      subTitle: 'กรุณาใส่ username และ password ให้ถูกต้อง',
+      buttons: ['OK']
+    });
+    alert.present();
+  }
 }
