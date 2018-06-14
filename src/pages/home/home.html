@@ -1,26 +1,22 @@
 <ion-header>
   <ion-navbar hideBackButton>
-    <button ion-button menuToggle icon-only>
-      <ion-icon name='menu'></ion-icon>
-    </button>
     <ion-title>
-      Menus
+      <a class="textcolor">ไดอารี่ประจำวัน</a>
     </ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content padding>
+<ion-content class="backgroundID" padding>
   <form [formGroup]="myGroup">
 
     <ion-list inset>
-
-      <ion-item>
-        <ion-label>name</ion-label>
-        <ion-input type="text" formControlName="name"></ion-input>
+      <ion-item class="backgroundID">
+        <ion-label floating>name</ion-label>
+        <ion-input type="text" class="textcolor" formControlName="name"></ion-input>
       </ion-item>
       <p id="nameError" class="invalid-feedback" *ngIf="myGroup.get('name').touched && myGroup.get('name').invalid"></p>
-      <ion-item>
-        <ion-label>price</ion-label>
-        <ion-input type="text" formControlName="price"></ion-input>
+      <ion-item class="backgroundID">
+        <ion-label floating>price</ion-label>
+        <ion-input type="text" class="textcolor" formControlName="price"></ion-input>
       </ion-item>
     </ion-list>
 
@@ -34,18 +30,19 @@
         <a>Sum : {{ sumNumber }}</a>
       </div>
     </div>
-    <ion-list *ngIf="isCheckListItem ">
-      <ion-item *ngFor="let y of ItemList ; let i=index ">
+    <ion-list *ngIf="isCheckListItem " >
+      <ion-item *ngFor="let y of ItemList ;let i=index;"  class="backgroundID">
         <ion-thumbnail item-start>
           <ion-icon name="people"></ion-icon>
         </ion-thumbnail>
-        <h2>{{ y.name }}</h2>
-        <h2>{{ y.price }}</h2>
+        <h2 class="textcolor">{{ y.name }}</h2>
+        <h2 class="textcolor">{{ y.price }}</h2>
+        <h2 class="textcolor" >{{ y.createDate }}</h2>
         <button ion-button (click)="deleteItem(y.id,i);">Delelte</button>
         <button ion-button (click)="openNavDetailsPage(y);">Detail</button>
-
       </ion-item>
     </ion-list>
+    <button ion-button (click)="logout();">Logout</button>
   </form>
 
 </ion-content>

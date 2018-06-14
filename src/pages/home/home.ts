@@ -3,6 +3,7 @@ import { NavController, MenuController, NavParams } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { NavigationDetailsPage } from '../navigation-details/navigation-details';
+import { LoginPage } from '../login/login';
 
 
 
@@ -19,6 +20,8 @@ export class HomePage {
   isCheckDeleteUpdate: boolean;
   sum: number;
   item;
+  CreateDateTimeArrays = [];
+  CreateDate;
 
   constructor(public navCtrl: NavController, private httpClient: HttpClient, private fb: FormBuilder, menu: MenuController, params: NavParams) {
     this.myGroup = this.fb.group({
@@ -27,8 +30,7 @@ export class HomePage {
     });
     menu.enable(true);
     this.item = params.data.item;
-    console.log("cont",this.item);
-    
+
   }
 
   addItem() {
@@ -42,6 +44,7 @@ export class HomePage {
         let body = new FormData();
         body.append('name', this.myGroup.get('name').value);
         body.append('price', this.myGroup.get('price').value);
+        body.append('createdatetime',String(new Date()))
         body.append('createby', this.item['username'])
         this.httpClient.post(url, body).subscribe(data => {
           this.ItemList.push(data);
@@ -67,12 +70,15 @@ export class HomePage {
     return new Promise(resolve => {
       const url = 'http://localhost:1323/itemlist'
       let body = new FormData()
-      body.append("createby",this.item['username'])
-      this.httpClient.post(url,body).subscribe((data: Array<any>) => {
+      body.append("createby", this.item['username'])
+      this.httpClient.post(url, body).subscribe((data: Array<any>) => {
         this.isCheckListItem = true;
-        this.ItemList = data;
-        console.log(data[0]);
-
+        for (let i = 0; i< data.length; i++){
+          this.CreateDate = new Date(data[i].createdatetime).getDate()+"/"+new Date(data[i].createdatetime).getMonth()+"/"+new Date(data[i].createdatetime).getFullYear();
+        this.ItemList.push({"id":data[i].id,"name" :data[i].name,"price" :data[i].price,"createDate" :this.CreateDate});  
+      }
+      console.log(this.ItemList);
+      
         this.sum = 0;
         for (let i = 0; i < this.ItemList.length; i++) {
           this.sum += Number(this.ItemList[i].price);
@@ -106,6 +112,7 @@ export class HomePage {
     this.navCtrl.push(NavigationDetailsPage, { item: item });
   }
 
-
+  logout(){
+    this.navCtrl.push(LoginPage);
+  }
 }
-

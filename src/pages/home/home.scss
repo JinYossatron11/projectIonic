@@ -1,4 +1,39 @@
 .invalid-feedback {
-    display: block;
-  }
-  
+  display: block;
+}
+
+.button {
+  background: mediumpurple;
+}
+
+.button :hover {
+  background: mediumslateblue;
+  border: mediumslateblue;
+}
+
+.toolbar-background {
+  background-color: mediumpurple;
+}
+
+.title {
+  color: white;
+}
+
+.inputText {
+  background-image: url('../assets/imgs/splash.png');
+}
+
+.backgroundID {
+  background-image: url('../assets/imgs/splash.png');
+}
+
+.textcolor {
+  size: 24px;
+  color: white;
+}
+
+ion-icon {
+  font-size: 30px; //Preferred size here
+  color: white;
+}
+
