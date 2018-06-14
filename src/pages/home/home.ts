@@ -44,7 +44,7 @@ export class HomePage {
         let body = new FormData();
         body.append('name', this.myGroup.get('name').value);
         body.append('price', this.myGroup.get('price').value);
-        body.append('createdatetime',String(new Date()))
+        body.append('createdatetime',new Date().getDate()+"/"+new Date().getMonth()+"/"+new Date().getFullYear());
         body.append('createby', this.item['username'])
         this.httpClient.post(url, body).subscribe(data => {
           this.ItemList.push(data);
@@ -73,12 +73,7 @@ export class HomePage {
       body.append("createby", this.item['username'])
       this.httpClient.post(url, body).subscribe((data: Array<any>) => {
         this.isCheckListItem = true;
-        for (let i = 0; i< data.length; i++){
-          this.CreateDate = new Date(data[i].createdatetime).getDate()+"/"+new Date(data[i].createdatetime).getMonth()+"/"+new Date(data[i].createdatetime).getFullYear();
-        this.ItemList.push({"id":data[i].id,"name" :data[i].name,"price" :data[i].price,"createDate" :this.CreateDate});  
-      }
-      console.log(this.ItemList);
-      
+        this.ItemList = data;
         this.sum = 0;
         for (let i = 0; i < this.ItemList.length; i++) {
           this.sum += Number(this.ItemList[i].price);
